@@ -1,4 +1,4 @@
-# foodmanager
+# foodwatch
 oustan bmi = 0
 oustan bmi -= 1
 
