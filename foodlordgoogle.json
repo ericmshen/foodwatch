@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "foodlord-5dd61",
+  "private_key_id": "9d4371b13540d9dd1b1e3e8874519e9191d7ce30",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCXmCepQa9EylPY\n/Y6ito6Q24ojgnTAjoOOMsGBIZtpzZi2Y80BIthRFeeQiLs+IWTzACGvebVmw82a\nJUj4IWImJ+IoMlFNCUTx+FreWLxYW9+NgnRAVSEo6jpGGEXJqx119u5TJjz3QjtQ\nmN38XRyawi9VxjfYoeP3eK+LGnnuWurKeecTJUUBG4eoJiPbg4YRCVWVKhc60sDW\nLg3rYw55R/ewI5xmkRkG2dlb/nP4guS2SisTjM07kA2y/F3gzcgdl6TeA/jdF/lz\n+SCaQdWm3ptRmAAVvd+z7O5T4u1L7UOH2Axb2Obi1LwFzymlvEJPRC/S2CEXghPo\ntsKJzFCpAgMBAAECggEAGkG3KuSO3kAaHkUqqamrj1ELP+PGY5y7kgteA0cGI2EC\nMKMgHLCDnaXI3jqkjdocYU92Ri2zOwmyiJ6pIRstJBU34YT3mnt+xtdgq87cToSZ\nN6ovBv6HuA27yqzFF61M9MPwmxPOLvh4jBjyKBYbkH2OU9G5lgrSUKiFZTdQg7VU\n0H5K5vGv19R10oqMk9HuzF/YIH3QPp2yOi3TYKqusGMPtb+tJbe/BHzyROwDQ9Ex\nvs5XxMKUHD4J/T3fZKsYoubhiPqiUfZqI5s98k65JZKa013l0Cm/i5iCDJwSzO+9\n292l38eHWsQIJ50DyFTQLLh+uYjkEzgI0JGtGtktBQKBgQDOgRNIdPzgg0XZOIQt\nOMgh1W6jSwLKvdw1ghwKn0i6rxOfKL/bPd3rCrx2++shblurRN1S/zhvp6mDs846\nICb94cfxgj0uvTUSk56iFleh0TiMoiKjqGeKEI5EbatnM1LeqiVHhzBPOH0mNPfJ\nKcxTBREC3+n0wm1KuosY9spJpQKBgQC77duF9PR8qABNZd1aXEntRERTXpq6lfbE\nhknC91lQdMZ5HEAkBUchavHS5KIZPjbF4jVp7LVG42OvCempTWh29VE0YRyuESSW\n8DMJiiFBHfPDu4ZRB/HxUQdzFpVyMXdkMVFHqOz4BqQhZtchk8GZrfI2zzRX0pEi\naEWYDOMTtQKBgBnrdaIonP0JPSEwyNZsRCKLCaIRbj5IanWE6UQkDhrwksPtd3dr\nYol4BYPhxvehRHxQ3n7mbg0FvG89iGsfUgWX62LS+B7/vMOiJ80shL9Y5YIxb6uf\nHa/kuBa6tUL03Df6n0dFHrky2/KJv3hOeMkK38G+nT0Nkm5Iz+DISUfJAoGAZw8V\n5+xhd0saf1dxgHBECl35qk6jQ9ehsDyEjurejAS+IwSfGCHc1DK10xWW34kCuJpI\n+IHbF7jznbYt8a6Fr1bw5WysMbks+6lWE9EwU2l9mMVp714QDGqHT1H/OtRtyQBS\ntp2o9ouNztN6/ursrL57qhsPdWoANYJBSBUpIlECgYA4lXCfDCdUXlN0g2AGRIEg\nW86Y1XjDpRKrCvdve2GgC7mrxjtzuDisD6oP7z/t+gtO82IW8SbLPT6xv3/u8ToY\n71V6aMghgYz7YkIGMJYsw215XbW+ignZGPZOj/AhQ+XwLdk88uo0VnYonBr8bvmx\n7WImP0BPJzhZoobZmDyu5Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-2ksfc@foodlord-5dd61.iam.gserviceaccount.com",
+  "client_id": "107030750649446843102",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-2ksfc%40foodlord-5dd61.iam.gserviceaccount.com"
+}
