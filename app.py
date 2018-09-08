@@ -17,16 +17,18 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://foodlord-5dd61.firebaseio.com/'
     })
 
-root = db.reference()
+# root = db.reference()
 
 @app.route('/')
 def index():
-    new_food = root.child('items').push({
-        'name': 'Banana',
-        'expiry': '09/10/2018'
-        })
-    banana = db.reference('items/{0}'.format(new_food.key)).get()
-    return render_template('index.html', banana = banana)
+    foods = []
+    for food in db.reference('items').get():
+        foodData = db.reference('items/{0}'.format(food)).get()
+        foods.append({
+            'name': foodData['name'],
+            'expiry': foodData['expiry']
+            })
+    return render_template('index.html', foods = foods)
 
 if __name__ == '__main__':
     app.run(debug=True)
