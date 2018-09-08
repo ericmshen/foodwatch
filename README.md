@@ -1,2 +1,2 @@
 # foodmanager
-oustan bmi = 1
+oustan bmi = 2
