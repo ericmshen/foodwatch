@@ -1,10 +1,11 @@
-import firebase_admin
+import firebase_admin, datetime
 from firebase_admin import db, credentials
 from flask import *
 from tempfile import mkdtemp
 # from twilio import twiml
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
+from datetime import timedelta, date, datetime
 
 app = Flask(__name__)
 
@@ -85,7 +86,21 @@ def index():
     message = client.messages.create(
         to="+16479815279",
         from_="+12672146320",
-        body="u have the brain of a neanderthal")
+        body="anna ma"
+        )
+    warning = ''
+    for food in foods:
+        expdate = datetime.strptime(food['expiry'], '%Y-%m-%d').date()
+        today = date.today()
+        print(expdate, today, (expdate-today).days)
+        if (expdate - today).days == 7:
+            warning += '{0} expires in 7 days!'.format(food['name'])
+    if warning != '':
+        warningMessage = client.messages.create(
+            to="+16479815279",
+            from_="+12672146320",
+            body=warning
+            )
     print(message.sid)
     return render_template('index.html', foods = foods)
 
