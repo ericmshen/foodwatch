@@ -6,12 +6,8 @@ client = Client(account_sid, auth_token)
 
 message = client.messages.create(
                               from_='+12672146320',
-                              body='hi this is a test',
+                              body='soylent',
                               to='+14165539697'
                           )
 
-<<<<<<< HEAD
-print(message.sid)uio 
-=======
 print(message.sid)
->>>>>>> 334415ce8a7baad51e0eccaa638ffb09622dcdd5
