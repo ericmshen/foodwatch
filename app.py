@@ -6,6 +6,7 @@ from tempfile import mkdtemp
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 from datetime import timedelta, date, datetime
+from operator import itemgetter
 
 app = Flask(__name__)
 
@@ -37,30 +38,56 @@ def sms():
     """Respond to incoming messages with a friendly SMS."""
 
     requested = request.form['Body']
+    requestedlist = requested.split(' ')
     number = request.form['From']
 
-    if requested == 'pantry':
+    if requested.lower() == 'pantry':
+        # query database
         foods = []
         for food in db.reference('items').get():
             foodData = db.reference('items/{0}'.format(food)).get()
+
+            # calculate days left until expiry
+            expdate = datetime.strptime(foodData['expiry'], '%Y-%m-%d').date()
+            today = date.today()
+            daysleft = (expdate - today).days
+
             foods.append({
+                'quantity': int(foodData['quantity']),
                 'name': foodData['name'],
-                'expiry': foodData['expiry']
+                'expiry': foodData['expiry'],
+                'daysleft': daysleft
                 })
-        sendMessage = ''
+
+        foods = sorted(foods, key = itemgetter('daysleft'))
+
+        sendMessage = '\n\n' # initialize message
+
         for food in foods:
-            sendMessage += food['name'] + ' ' + food['expiry'] + '\n'
-        print(number)
+            if food['daysleft'] == 0:
+                if food['quantity'] == 1:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires TODAY!\n'
+                else:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire TODAY!\n'
+            else:
+                if food['quantity'] == 1 and food['daysleft'] == 1:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires TOMMOROW!\n'
+                elif food['quantity'] > 1 and food['daysleft'] == 1:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire TOMMOROW!\n'
+                elif food['quantity'] == 1 and food['daysleft'] > 1:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires in ' + str(food['daysleft']) + ' days on ' + food['expiry'] + '\n'
+                else:
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire in ' + str(food['daysleft']) + ' days on ' + food['expiry'] + '\n'
         message = client.messages.create(
             to=number,
             from_="+12672146320",
             body=sendMessage)
-    else:
+    elif requestedlist[0] == 'add':
         requested = requested.split(' ')
         entry = {
-            'quantity': requested[0],
-            'name': requested[1],
-            'expiry': requested[2]
+            'quantity': requested[1],
+            'name': ' '.join(requested[2:-1]).upper(),
+            'expiry': requested[-1]
         }
 
         new_food = root.child('items').push(entry)
@@ -72,6 +99,8 @@ def sms():
         resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
 
         return str(resp)
+
+    return render_template('index.html')
 
 # Load foods in website
 @app.route('/')
