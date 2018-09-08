@@ -1,0 +1,93 @@
+{
+  "user": {
+    "userId": "ABwppHHpmItHOK7PqfUCBTUKO_l88y6sDnClXMllI1NChOICm0sXE8pfBBVIyEU_JyfuU2Q0DKlyX3fiPhsEdmMm",
+    "locale": "en-US",
+    "lastSeen": "2018-09-08T17:52:50Z"
+  },
+  "conversation": {
+    "conversationId": "ABwppHGRgb8O-irPzeiecglVo5N9InFUVuoWOosvzclMqHquAkM2UOrgUdY7dOUduvfISfhq8sp4jZ1lt2pe7aRH",
+    "type": "ACTIVE",
+    "conversationToken": "[]"
+  },
+  "inputs": [
+    {
+      "intent": "actions.intent.TEXT",
+      "rawInputs": [
+        {
+          "inputType": "KEYBOARD",
+          "query": "Add 3 Banana Dec 17 2018"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "text",
+          "rawText": "Add 3 Banana Dec 17 2018",
+          "textValue": "Add 3 Banana Dec 17 2018"
+        }
+      ]
+    }
+  ],
+  "surface": {
+    "capabilities": [
+      {
+        "name": "actions.capability.SCREEN_OUTPUT"
+      },
+      {
+        "name": "actions.capability.AUDIO_OUTPUT"
+      },
+      {
+        "name": "actions.capability.WEB_BROWSER"
+      },
+      {
+        "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+      }
+    ]
+  },
+  "isInSandbox": true,
+  "requestType": "SIMULATOR"
+}
+
+// Response Data
+{
+  "conversationToken": "[]",
+  "expectUserResponse": true,
+  "expectedInputs": [
+    {
+      "inputPrompt": {
+        "richInitialPrompt": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": "Added 3 Banana 2018-12-17"
+              }
+            }
+          ]
+        }
+      },
+      "possibleIntents": [
+        {
+          "intent": "assistant.intent.action.TEXT"
+        }
+      ],
+      "speechBiasingHints": [
+        "$Food",
+        "$Drink"
+      ]
+    }
+  ],
+  "responseMetadata": {
+    "status": {
+      "code": 14,
+      "message": "Webhook error (206)"
+    },
+    "queryMatchInfo": {
+      "queryMatched": true,
+      "intent": "7a0bfd8f-75c5-4074-a971-0523d9b93a2a",
+      "parameterNames": [
+        "Amount",
+        "Date",
+        "Food"
+      ]
+    }
+  }
+}
