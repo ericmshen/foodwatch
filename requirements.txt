@@ -1,4 +1,4 @@
-firebase
+firebase-admin
 flask
 tempfile
 twilio
