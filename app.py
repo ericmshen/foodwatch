@@ -22,27 +22,55 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://foodlord-5dd61.firebaseio.com/'
     })
 
+root = db.reference()
+
 # Twilio
 account_sid = 'ACa209e1ae289d60729d7321952c4d8974'
 auth_token = '483d41d0e680edbfa018d0f0cfc6c578'
 
 client = Client(account_sid, auth_token)
 
-# Take data from Twilio and send to Firebase
-@app.route('/receive')
-def receive():
-    message = request.form['Body']
 
 @app.route("/sms", methods=['GET', 'POST'])
-def sms_ahoy_reply():
+def sms():
     """Respond to incoming messages with a friendly SMS."""
-    # Start our response
-    resp = MessagingResponse()
 
-    # Add a message
-    resp.message("Ahoy! Thanks so much for your message.")
+    requested = request.form['Body']
+    number = request.form['From']
 
-    return str(resp)
+    if requested == 'pantry':
+        foods = []
+        for food in db.reference('items').get():
+            foodData = db.reference('items/{0}'.format(food)).get()
+            foods.append({
+                'name': foodData['name'],
+                'expiry': foodData['expiry']
+                })
+        sendMessage = ''
+        for food in foods:
+            sendMessage += food['name'] + ' ' + food['expiry'] + '\n'
+        print(number)
+        message = client.messages.create(
+            to=number,
+            from_="+12672146320",
+            body=sendMessage)
+    else:
+        requested = requested.split(' ')
+        entry = {
+            'quantity': requested[0],
+            'name': requested[1],
+            'expiry': requested[2]
+        }
+
+        new_food = root.child('items').push(entry)
+
+        # Start our response
+        resp = MessagingResponse()
+
+        # Add a message
+        resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+        return str(resp)
 
 # Load foods in website
 @app.route('/')
@@ -55,7 +83,7 @@ def index():
             'expiry': foodData['expiry']
             })
     message = client.messages.create(
-        to="+14165539697",
+        to="+16479815279",
         from_="+12672146320",
         body="u have the brain of a neanderthal")
     print(message.sid)
