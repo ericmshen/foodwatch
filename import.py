@@ -5,7 +5,7 @@ import pandas as pd
 
 with open('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json') as f:
     data = json.load(f)
-    
+
 data = json.loads(data)
 
 file = csv.writer(open("food_expiry.csv", "wb+"))
@@ -17,5 +17,5 @@ def importdict(foodexpiry):
 if __name__ == '__main__':
     fileDATES = importdict('dates')
 
-print(fileDates)
+print(fileDATES)
 
