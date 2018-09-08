@@ -1,0 +1,6 @@
+firebase
+flask
+tempfile
+twilio
+datetime
+operator

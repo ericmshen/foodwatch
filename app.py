@@ -82,7 +82,7 @@ def sms():
             to=number,
             from_="+12672146320",
             body=sendMessage)
-    elif requestedlist[0] == 'add':
+    elif requestedlist[0].lower() == 'add':
         requested = requested.split(' ')
         entry = {
             'quantity': requested[1],
@@ -97,6 +97,23 @@ def sms():
 
         # Add a message
         resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+        return str(resp)
+    elif requestedlist[0].lower() == 'remove':
+        requested = requested.split(' ')
+        entry = {
+            'quantity': requested[1],
+            'name': ' '.join(requested[2:-1]).upper(),
+            'expiry': requested[-1]
+        }
+
+        new_food = root.child('items').push(entry)
+
+        # Start our response
+        resp = MessagingResponse()
+
+        # Add a message
+        resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
 
         return str(resp)
 
