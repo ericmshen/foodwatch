@@ -99,6 +99,7 @@ def sms():
         resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
 
         return str(resp)
+
     elif requestedlist[0].lower() == 'remove':
         requested = requested.split(' ')
         entry = {
@@ -132,7 +133,7 @@ def index():
     message = client.messages.create(
         to="+16479815279",
         from_="+12672146320",
-        body="anna ma"
+        body="stravinsky = GOAT"
         )
     warning = ''
     for food in foods:
