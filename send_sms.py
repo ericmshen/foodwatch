@@ -10,4 +10,8 @@ message = client.messages.create(
                               to='+14165539697'
                           )
 
+<<<<<<< HEAD
 print(message.sid)uio 
+=======
+print(message.sid)
+>>>>>>> 334415ce8a7baad51e0eccaa638ffb09622dcdd5
