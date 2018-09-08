@@ -11,11 +11,19 @@ data = json.loads(data)
 file = csv.writer(open("food_expiry.csv", "wb+"))
 
 def importdict(foodexpiry):
-    df=pd.read_csv(filename+'.csv', names=['systemtime', 'Var1', 'var2'],sep=';',parse_dates=[0])
+    df=pd.read_csv(foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135+'.csv', names=['systemtime', 'Var1', 'var2'],sep=';',parse_dates=[0])
     fileDATES=df.T.to_dict().values()
     return fileDATES
 if __name__ == '__main__':
-    fileDATES = importdict('dates')
+    fileDATES = importdict('Date')
+
+data0=pd.read_csv('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json')
+
+# %Y - year 
+# %m - month (01 - 12)
+# &d - day (01-31)
+data0['Date']=pd.to_datetime(data0['Date'], format="%Y/%m/%d")
 
 print(fileDATES)
 
+	
