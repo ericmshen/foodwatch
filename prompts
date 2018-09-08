@@ -1,0 +1,22 @@
+Input Data:
+	What did you buy today? <input>
+	What is its expiry date? <input>
+	Item received! Your <item> will expire in <number of days> days.
+
+Messages:
+	Warnings 
+		Hi <User>, just letting you know that <Item> will expire in one week.
+		<Item> will expire in one week.
+		<Item> will expire in three days.
+		<Item> expires tomorrow. Be mindful!
+		<User>, your <item> has expired. I’d recommend you dispose of it appropriately.
+	Notices 
+		(If using app, display table of items along with respective expiry date, and number of days to expiry)
+		App notifications in similar format
+	Requests 
+		What item would you like to check?
+		<User>, your <item> will expire in <number of days> days, on <date>
+
+Voice Messages
+	(upon receipt of message) Okay. I’ve recorded your item. It’s due to expire in <number of days> days.
+	(unclear input) Sorry, I didn’t understand that. Could you repeat?
