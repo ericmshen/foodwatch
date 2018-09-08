@@ -2,7 +2,9 @@ import firebase_admin
 from firebase_admin import db, credentials
 from flask import *
 from tempfile import mkdtemp
+# from twilio import twiml
 from twilio.rest import Client
+from twilio.twiml.messaging_response import MessagingResponse
 
 app = Flask(__name__)
 
@@ -26,6 +28,23 @@ auth_token = '483d41d0e680edbfa018d0f0cfc6c578'
 
 client = Client(account_sid, auth_token)
 
+# Take data from Twilio and send to Firebase
+@app.route('/receive')
+def receive():
+    message = request.form['Body']
+
+@app.route("/sms", methods=['GET', 'POST'])
+def sms_ahoy_reply():
+    """Respond to incoming messages with a friendly SMS."""
+    # Start our response
+    resp = MessagingResponse()
+
+    # Add a message
+    resp.message("Ahoy! Thanks so much for your message.")
+
+    return str(resp)
+
+# Load foods in website
 @app.route('/')
 def index():
     foods = []
