@@ -14,13 +14,17 @@
         <table class="table table-default">
             <thead>
                 <th>Food</th>
+                <th>Quantity</th>
                 <th>Expiry</th>
+                <th>Days Left</th>
             </thead>
             <tbody>
                 {% for food in foods %}
                     <tr>
                         <td>{{ food.name }}</td>
+                        <td>{{ food.quantity|string }}</td>
                         <td>{{ food.expiry }}</td>
+                        <td>{{ food.daysleft }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
