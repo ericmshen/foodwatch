@@ -33,7 +33,13 @@
                         <td>{{ food.name }}</td>
                         <td>{{ food.quantity|string }}</td>
                         <td>{{ food.expiry }}</td>
-                        <td>{{ food.daysleft }}</td>
+                        <td class="
+                        {% if food.daysleft <= 3 %}red
+                        {% elif food.daysleft > 3 and food.daysleft <= 14 %}yellow
+                        {% else%}green
+                        {%endif%}
+
+                        ">{{ food.daysleft }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
