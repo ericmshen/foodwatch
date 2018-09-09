@@ -32,5 +32,5 @@ Our main goal for improving FoodWatch would be improving accessibility. Mainly, 
 Currently, we also have a way for users to access their inventory online, where all their items are listed via the Flask microframework. Aside from the task of finding web hosting and a domain name, in the future, we would like to set up an authentication system to ensure users access their own lists. This feature would add an extra level of convenience to checking groceries and upcoming expiry dates. 
 
 ## Screenshots ##
-![SMS message interface]()
-![Online access]()
+![SMS message interface](https://i.imgur.com/IBs0WBF.png)
+![Online access](https://i.imgur.com/Xi5U3hO.png)
