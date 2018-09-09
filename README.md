@@ -25,7 +25,6 @@ User actions:
 * Add item to inventory: “add (quantity) (commodity name) (expiry date)”
 * Viewing inventory: “pantry”
 * Remove item from inventory: “remove (quantity) (commodity name) (expiry date)”
-* Clearing inventory: “remove all”
 
 ## Next Steps ##
 Our main goal for improving FoodWatch would be improving accessibility. Mainly, we want to add compatibility with Google Home and Alexa, so that user inventory can also be edited through voice commands (e.g. using the Google Assistant API for Google Home).
