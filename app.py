@@ -94,7 +94,7 @@ def sms():
             body=sendMessage)
 
     elif requestedlist[0].lower() == 'add':
-        if not type(requestedlist[1]) != 'int' or re.search(r'^(\d{4})-(\d{2})-(\d{2})$', requestedlist[-1]) == None:
+        if not checkInt(requestedlist[1]) or not re.search(r'^(\d{4})-(\d{2})-(\d{2})$', requestedlist[-1]):
             # Start our response
             resp = MessagingResponse()
 
@@ -255,11 +255,13 @@ def index():
             })
 
     # test message
+    '''
     message = client.messages.create(
         to="+16479815279",
         from_="+12672146320",
         body="stravinsky = GOAT"
         )
+    '''
 
     warning = ''
     for food in foods:
@@ -282,15 +284,60 @@ def index():
             body=warning
             )
 
-    print(message.sid)
-
     foods = sorted(foods, key = itemgetter('expiry'))
 
     return render_template('index.html', foods = foods)
 
-@app.route('/add')
+@app.route('/add', methods = ['GET', 'POST'])
 def add():
-    return render_template('add.html')
+    if request.method == 'POST':
+        if not request.form.get('quantity') or not request.form.get('name') or not request.form.get('expiry'):
+            flask('Invalid input.')
+            return redirect(url_for('add'))
+        elif not checkInt(request.form.get('quantity')) or not re.search(r'^(\d{4})-(\d{2})-(\d{2})$', request.form.get('expiry')):
+            flask('Invalid input.')
+            return redirect(url_for('add'))
+        elif int(request.form.get('quantity')) <= 0:
+            # Start our response
+            flask('Invalid input.')
+            return redirect(url_for('add'))
+        else:
+            name = request.form.get('name')
+            quantity = int(request.form.get('quantity'))
+            expiry = request.form.get('expiry')
+
+            exists = False # Boolean for whether the thing is found
+            entry = {
+                'quantity': quantity,
+                'name': name.upper(),
+                'expiry': expiry
+            }
+
+            for food in db.reference('items').get():
+                foodData = db.reference('items/{0}'.format(food)).get()
+                if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                    foodKey = food
+                    print(foodKey)
+                    foodQuantity = foodData['quantity']
+                    exists = True
+
+            if exists == True:
+                new_food = db.reference('items/{0}'.format(foodKey)).update({
+                    'quantity': foodQuantity + entry['quantity']
+                    })
+            else:
+                new_food = root.child('items').push(entry)
+
+            message = client.messages.create(
+                to="+16479815279",
+                from_="+12672146320",
+                body="Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry'])
+                )
+
+            flash('Added!')
+            return render_template('add.html')
+    else:
+        return render_template('add.html')
 
 @app.route('/remove/<name>/<expiry>', methods = ['POST'])
 def remove(name, expiry):
@@ -308,6 +355,12 @@ def remove(name, expiry):
                 edit_food = db.reference('items/{0}'.format(food)).update({
                     'quantity': foodData['quantity'] - quantity
                     })
+
+    message = client.messages.create(
+        to="+16479815279",
+        from_="+12672146320",
+        body="Removed! {0} ({1}) expires {2}".format(name, str(quantity), expiry)
+        )
 
     flash('Removed!')
     return redirect(url_for('index'))

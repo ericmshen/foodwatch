@@ -1,31 +1,25 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Foods
+    Add
 {% endblock %}
 
 {% block main %}
     <div class="container">
         <h4>Add a food item</h4>
         <form action="/add" method="POST">
-            Quantity: <input autocomplete="off" autofocus class="form-control" type="text" food.quantity="food.quantity" placeholder="Quantity of Food Item" ><br>
-            Food: <input autocomplete="off" autofocus class="form-control" type="text" food.name="food.name" placeholder="Name of Food" ><br>
-            Expiry: <input autocomplete="off" autofocus class="form-control" type="text" food.expiry="food.expiry" placeholder="Expiry Date" ><br>
-            
+            Quantity: <input autocomplete="off" autofocus class="form-control" type="text" food.quantity="food.quantity" placeholder="Quantity of Food Item" name="quantity"><br>
+            Food: <input autocomplete="off" autofocus class="form-control" type="text" food.name="food.name" placeholder="Name of Food" name="name"><br>
+            Expiry: <input autocomplete="off" autofocus class="form-control" type="text" food.expiry="food.expiry" placeholder="Expiry Date" name="expiry"><br>
             <div class = "row">
                 <div class = "col-md-6">
-
                     <button class="btn btn-primary" type="submit">Add</button>
                 </div>
-
                 <div class = "col-md-6 text-right">
-                    <button class="btn btn-danger" type="submit">Back</button>
+                    <a href="/" class="btn btn-danger">Back</a>
                 </div>
-
-
             </div>
-
         </form>
         <br>
     </div>
-{% endblock %} 
+{% endblock %}
