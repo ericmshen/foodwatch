@@ -2,16 +2,11 @@ p {
     margin: 0px;
 }
 
+select {
+    width: auto;
+}
+
 .red {
     color: red;
 }
 
-
-.yellow {
-    color: yellow;
-}
-
-
-.green {
-    color: green;
-}
