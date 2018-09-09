@@ -253,24 +253,35 @@ def index():
             'expiry': foodData['expiry'],
             'daysleft': daysleft
             })
+
+    # test message
     message = client.messages.create(
         to="+16479815279",
         from_="+12672146320",
         body="stravinsky = GOAT"
         )
+
     warning = ''
     for food in foods:
         expdate = datetime.strptime(food['expiry'], '%Y-%m-%d').date()
         today = date.today()
         print(expdate, today, (expdate-today).days)
-        if (expdate - today).days == 7:
-            warning += '{0} expires in 7 days!'.format(food['name'])
+        if (expdate - today).days == 0:
+            warning += u'\u2022' + ' ' + '{0} expires TODAY!'.format(food['name']) + '\n'
+        elif (expdate - today).days == 1:
+            warning += u'\u2022' + ' ' + '{0} expires TOMORROW!'.format(food['name']) + '\n'
+        elif (expdate - today).days == 3:
+            warning += u'\u2022' + ' ' + '{0} expires in 3 days!'.format(food['name']) + '\n'
+        elif (expdate - today).days == 7:
+            warning += u'\u2022' + ' ' + '{0} expires in 7 days!'.format(food['name']) + '\n'
+
     if warning != '':
         warningMessage = client.messages.create(
             to="+16479815279",
             from_="+12672146320",
             body=warning
             )
+
     print(message.sid)
     return render_template('index.html', foods = foods)
 
