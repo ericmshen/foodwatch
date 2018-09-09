@@ -292,8 +292,10 @@ def index():
 def add():
     return render_template('add.html')
 
-@app.route('/remove')
+@app.route('/remove', methods = ['POST'])
 def remove():
+
+
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
