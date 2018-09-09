@@ -32,6 +32,12 @@ auth_token = '483d41d0e680edbfa018d0f0cfc6c578'
 
 client = Client(account_sid, auth_token)
 
+def checkInt(i):
+    try:
+        int(i)
+        return True
+    except ValueError:
+        return False
 
 @app.route("/sms", methods=['GET', 'POST'])
 def sms():
@@ -93,7 +99,7 @@ def sms():
             resp = MessagingResponse()
 
             # Add a message
-            resp.message("Invalid format. Proper: [command] [quantity] [food] [yyyy-mm-dd]")
+            resp.message("Invalid format. Proper: add [quantity] [food] [yyyy-mm-dd]")
 
             return str(resp)
         elif int(requestedlist[1]) <= 0:
@@ -136,41 +142,87 @@ def sms():
             return str(resp)
 
     elif requestedlist[0].lower() == 'remove':
-        requested = requested.split(' ')
-        entryName = requested[0]
-        entryCounter = 0
-
-
-
-        for food in foods:
-            if food['name'] == entryName:
-                entryCounter += 1
-
-        if entryCounter != 1:
+        if not checkInt(requestedlist[1]) and requestedlist[1] != 'all':
+            # Start our response
             resp = MessagingResponse()
-            resp.message('Expiry date?')
 
-            entryExpiry = request.form['Body']
+            # Add a message
+            resp.message("Quantity must be greater than 0 or 'all'.")
 
-            foodData = db.reference('items/{0}'.format(food)).get()
+            return str(resp)
+        elif ' '.join(requestedlist[2:-1]).upper() not in [food['name'] for food in foods]:
 
-        else:
-            entry = {
-            'quantity': requested[1],
-            'name': ' '.join(requested[2:-1]).upper(),
-            'expiry': requested[-1]
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Food does not exist in pantry.")
+
+            return str(resp)
+
+        # Retrieve number of food in pantry
+        for food in foods:
+            if food['name'] == ' '.join(requestedlist[2:-1]).upper() and food['quantity'] == requestedlist[-1]:
+                currentQ = food['quantity']
+
+        entry = {
+            'quantity': requestedlist[1],
+            'name': ' '.join(requestedlist[2:-1]).upper(),
+            'expiry': requestedlist[-1]
         }
 
+        if requestedlist[1] == 'all':
+            for food in db.reference('items').get():
+                foodData = db.reference('items/{0}'.format(food)).get()
+                if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                    delete_food = db.reference('items/{0}'.format(food)).delete()
 
-        new_food = root.child('items').push(entry)
+            # Start our response
+            resp = MessagingResponse()
 
-        # Start our response
-        resp = MessagingResponse()
+            # Add a message
+            resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
 
-        # Add a message
-        resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+            return str(resp)
 
-        return str(resp)
+        elif int(requestedlist[1]) == currentQ:
+            for food in db.reference('items').get():
+                foodData = db.reference('items/{0}'.format(food)).get()
+                if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                    delete_food = db.reference('items/{0}'.format(food)).delete()
+
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+            return str(resp)
+
+        elif int(requestedlist[1]) < currentQ:
+            for food in db.reference('items').get():
+                foodData = db.reference('items/{0}'.format(food)).get()
+                if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                    edit_food = db.reference('items/{0}'.format(food)).update({
+                        'quantity': foodData['quantity'] - entry['quantity']
+                        })
+
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+            return str(resp)
+
+        else:
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Invalid input.")
+
+            return str(resp)
 
     else:
         # Start our response
