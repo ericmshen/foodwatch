@@ -1,8 +1,10 @@
 # FoodWatch #
 ![banner](https://i.imgur.com/s4gUu2p.png)
 
-## Inspiration ##
 FoodWatch is a platform that allows users to track and manage their groceries. Users can create, edit, and access their inventory, and receive SMS updates when expiry dates approach.
+
+## Inspiration ##
+According to The Atlantic, about $160 billion of produce is thrown away annually in the US, often as a result of expiry. The idea for FoodWatch was inspired by a desire to reduce this amount of waste through creating a convenient way of reminding users of expiry dates, while also making grocery shopping easier by allowing users to access a catalog of what they already have back home.
 
 ## Description ##
 FoodWatch operates via SMS messages between the user and the platform. To add items to their inventory (the groceries they currently have), the user provides a description and expiry date. To view their inventory, the user may send a message to FoodWatch, and is returned with a full list of items and their expiry dates. In addition, the user may also view their list online. The user may also remove items upon consumption; a user guide can be found below.
