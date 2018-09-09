@@ -276,6 +276,8 @@ def index():
             warning += u'\u2022' + ' ' + '{0} expires in 3 days!'.format(food['name']) + '\n'
         elif (expdate - today).days == 7:
             warning += u'\u2022' + ' ' + '{0} expires in 7 days!'.format(food['name']) + '\n'
+        elif (expdate - today).days < 0:
+            warning += u'\u2022' + ' ' + '{0} has expired!'.format(food['name']) + '\n'
 
     if warning != '':
         warningMessage = client.messages.create(
