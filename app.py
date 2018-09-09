@@ -37,32 +37,34 @@ client = Client(account_sid, auth_token)
 def sms():
     """Respond to incoming messages with a friendly SMS."""
 
+    # Retrieve food data, store in list of dictionaries
+    foods = []
+    for food in db.reference('items').get():
+        foodData = db.reference('items/{0}'.format(food)).get()
+
+        # calculate days left until expiry
+        expdate = datetime.strptime(foodData['expiry'], '%Y-%m-%d').date()
+        today = date.today()
+        daysleft = (expdate - today).days
+
+        foods.append({
+            'quantity': int(foodData['quantity']),
+            'name': foodData['name'],
+            'expiry': foodData['expiry'],
+            'daysleft': daysleft
+            })
+
+    foods = sorted(foods, key = itemgetter('daysleft'))
+
+    # Retrieve SMS information
     requested = request.form['Body']
     requestedlist = requested.split(' ')
     number = request.form['From']
 
     if requested.lower() == 'pantry':
-        # query database
-        foods = []
-        for food in db.reference('items').get():
-            foodData = db.reference('items/{0}'.format(food)).get()
-
-            # calculate days left until expiry
-            expdate = datetime.strptime(foodData['expiry'], '%Y-%m-%d').date()
-            today = date.today()
-            daysleft = (expdate - today).days
-
-            foods.append({
-                'quantity': int(foodData['quantity']),
-                'name': foodData['name'],
-                'expiry': foodData['expiry'],
-                'daysleft': daysleft
-                })
-
-        foods = sorted(foods, key = itemgetter('daysleft'))
-
         sendMessage = '\n\n' # initialize message
 
+        # Print appropriate message for every food
         for food in foods:
             if food['daysleft'] == 0:
                 if food['quantity'] == 1:
@@ -78,19 +80,35 @@ def sms():
                     sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires in ' + str(food['daysleft']) + ' days on ' + food['expiry'] + '\n'
                 else:
                     sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire in ' + str(food['daysleft']) + ' days on ' + food['expiry'] + '\n'
+
+        # Send message
         message = client.messages.create(
             to=number,
             from_="+12672146320",
             body=sendMessage)
+
     elif requestedlist[0].lower() == 'add':
-        requested = requested.split(' ')
+        exists = False # Boolean for whether the thing is found
         entry = {
-            'quantity': requested[1],
-            'name': ' '.join(requested[2:-1]).upper(),
-            'expiry': requested[-1]
+            'quantity': int(requestedlist[1]),
+            'name': ' '.join(requestedlist[2:-1]).upper(),
+            'expiry': requestedlist[-1]
         }
 
-        new_food = root.child('items').push(entry)
+        for food in db.reference('items').get():
+            foodData = db.reference('items/{0}'.format(food)).get()
+            if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                foodKey = food
+                print(foodKey)
+                foodQuantity = foodData['quantity']
+                exists = True
+
+        if exists == True:
+            new_food = db.reference('items/{0}'.format(foodKey)).update({
+                'quantity': foodQuantity + entry['quantity']
+                })
+        else:
+            new_food = root.child('items').push(entry)
 
         # Start our response
         resp = MessagingResponse()
@@ -102,11 +120,30 @@ def sms():
 
     elif requestedlist[0].lower() == 'remove':
         requested = requested.split(' ')
-        entry = {
+        entryName = requested[0]
+        entryCounter = 0
+
+
+
+        for food in foods:
+            if food['name'] == entryName:
+                entryCounter += 1
+
+        if entryCounter != 1:
+            resp = MessagingResponse()
+            resp.message('Expiry date?')
+
+            entryExpiry = request.form['Body']
+
+            foodData = db.reference('items/{0}'.format(food)).get()
+
+        else:
+            entry = {
             'quantity': requested[1],
             'name': ' '.join(requested[2:-1]).upper(),
             'expiry': requested[-1]
         }
+
 
         new_food = root.child('items').push(entry)
 
@@ -126,9 +163,17 @@ def index():
     foods = []
     for food in db.reference('items').get():
         foodData = db.reference('items/{0}'.format(food)).get()
+
+        # calculate days left until expiry
+        expdate = datetime.strptime(foodData['expiry'], '%Y-%m-%d').date()
+        today = date.today()
+        daysleft = (expdate - today).days
+
         foods.append({
             'name': foodData['name'],
-            'expiry': foodData['expiry']
+            'quantity': str(foodData['quantity']),
+            'expiry': foodData['expiry'],
+            'daysleft': daysleft
             })
     message = client.messages.create(
         to="+16479815279",
