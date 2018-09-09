@@ -1,4 +1,4 @@
-import firebase_admin, datetime
+import firebase_admin, datetime, re
 from firebase_admin import db, credentials
 from flask import *
 from tempfile import mkdtemp
@@ -88,35 +88,52 @@ def sms():
             body=sendMessage)
 
     elif requestedlist[0].lower() == 'add':
-        exists = False # Boolean for whether the thing is found
-        entry = {
-            'quantity': int(requestedlist[1]),
-            'name': ' '.join(requestedlist[2:-1]).upper(),
-            'expiry': requestedlist[-1]
-        }
+        if not type(requestedlist[1]) != 'int' or re.search(r'^(\d{4})-(\d{2})-(\d{2})$', requestedlist[-1]) == None:
+            # Start our response
+            resp = MessagingResponse()
 
-        for food in db.reference('items').get():
-            foodData = db.reference('items/{0}'.format(food)).get()
-            if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
-                foodKey = food
-                print(foodKey)
-                foodQuantity = foodData['quantity']
-                exists = True
+            # Add a message
+            resp.message("Invalid format. Proper: [command] [quantity] [food] [yyyy-mm-dd]")
 
-        if exists == True:
-            new_food = db.reference('items/{0}'.format(foodKey)).update({
-                'quantity': foodQuantity + entry['quantity']
-                })
+            return str(resp)
+        elif int(requestedlist[1]) <= 0:
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Quantity must be greater than 0.")
+
+            return str(resp)
         else:
-            new_food = root.child('items').push(entry)
+            exists = False # Boolean for whether the thing is found
+            entry = {
+                'quantity': int(requestedlist[1]),
+                'name': ' '.join(requestedlist[2:-1]).upper(),
+                'expiry': requestedlist[-1]
+            }
 
-        # Start our response
-        resp = MessagingResponse()
+            for food in db.reference('items').get():
+                foodData = db.reference('items/{0}'.format(food)).get()
+                if entry['name'] == foodData['name'] and entry['expiry'] == foodData['expiry']:
+                    foodKey = food
+                    print(foodKey)
+                    foodQuantity = foodData['quantity']
+                    exists = True
 
-        # Add a message
-        resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+            if exists == True:
+                new_food = db.reference('items/{0}'.format(foodKey)).update({
+                    'quantity': foodQuantity + entry['quantity']
+                    })
+            else:
+                new_food = root.child('items').push(entry)
 
-        return str(resp)
+            # Start our response
+            resp = MessagingResponse()
+
+            # Add a message
+            resp.message("Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+            return str(resp)
 
     elif requestedlist[0].lower() == 'remove':
         requested = requested.split(' ')
@@ -152,6 +169,15 @@ def sms():
 
         # Add a message
         resp.message("Removed! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry']))
+
+        return str(resp)
+
+    else:
+        # Start our response
+        resp = MessagingResponse()
+
+        # Add a message
+        resp.message("Invalid command.")
 
         return str(resp)
 
