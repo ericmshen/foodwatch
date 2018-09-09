@@ -1,5 +1,5 @@
 # FoodWatch #
-![banner](https://i.imgur.com/NtqaYc4.png)
+![banner](https://i.imgur.com/s4gUu2p.png)
 
 ## Inspiration ##
 FoodWatch is a platform that allows users to track and manage their groceries. Users can create, edit, and access their inventory, and receive SMS updates when expiry dates approach.
