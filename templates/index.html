@@ -20,22 +20,22 @@
             <tbody>
                 {% for food in foods %}
                     <tr>
-                        <td>{{ food.name }}</td>
-                        <td>{{ food.quantity|string }}</td>
-                        <td>{{ food.expiry }}</td>
-                        {% if food.daysleft <= 3 %}
-                            <td style="color: red;">{{ food.daysleft }}</td>
-                        {% else %}
-                            <td>{{ food.daysleft }}</td>
-                        {% endif %}
-                        <form method="POST">
+                        <form method="POST" action="/remove/{{ food.name }}/{{ food.expiry }}">
+                            <td>{{ food.name }}</td>
+                            <td>{{ food.quantity|string }}</td>
+                            <td>{{ food.expiry }}</td>
+                            {% if food.daysleft <= 3 %}
+                                <td style="color: red;">{{ food.daysleft }}</td>
+                            {% else %}
+                                <td>{{ food.daysleft }}</td>
+                            {% endif %}
                             <td><select class="form-control" name="quantity">
                                 <option value="all" selected>All</option>
-                                {% for i in range(food.quantity|int) %}
+                                {% for i in range(food.quantity|int - 1) %}
                                     <option value="{{ i + 1 }}">{{ i + 1 }}</option>
                                 {% endfor %}
                             </select></td>
-                            <td><button class="btn btn-primary" type="submit">Remove</button></td>
+                            <td><button class="btn btn-danger" type="submit">Remove</button></td>
                         </form>
 
                     </tr>

@@ -292,10 +292,24 @@ def index():
 def add():
     return render_template('add.html')
 
-@app.route('/remove', methods = ['POST'])
-def remove():
+@app.route('/remove/<name>/<expiry>', methods = ['POST'])
+def remove(name, expiry):
+    if request.form.get('quantity') == 'all':
+        quantity = request.form.get('quantity')
+        for food in db.reference('items').get():
+            foodData = db.reference('items/{0}'.format(food)).get()
+            if name == foodData['name'] and expiry == foodData['expiry']:
+                delete_food = db.reference('items/{0}'.format(food)).delete()
+    else:
+        quantity = int(request.form.get('quantity'))
+        for food in db.reference('items').get():
+            foodData = db.reference('items/{0}'.format(food)).get()
+            if name == foodData['name'] and expiry == foodData['expiry']:
+                edit_food = db.reference('items/{0}'.format(food)).update({
+                    'quantity': foodData['quantity'] - quantity
+                    })
 
-
+    flash('Removed!')
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
