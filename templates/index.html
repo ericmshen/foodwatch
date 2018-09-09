@@ -49,9 +49,11 @@
                         <td>{{ food.name }}</td>
                         <td>{{ food.quantity|string }}</td>
                         <td>{{ food.expiry }}</td>
-                        <td {% if food.daysleft <= 3 %} class="red"{% endif %}>
-                            {{ food.daysleft }}
-                        </td>
+                        {% if food.daysleft <= 3 %}
+                            <td class="red">{{ food.daysleft }}</td>
+                        {% else %}
+                            <td>{{ food.daysleft }}</td>
+                        {% endif %}
                         <td><a href="">Delete</a></td>
                     </tr>
                 {% endfor %}
