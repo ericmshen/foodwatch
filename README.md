@@ -22,9 +22,9 @@ We used the following technologies:
 * Frontend deployment on Flask microframework
 
 User actions:
-* Add item to inventory: “add <quantity> <commodity name> <expiry date>”
+* Add item to inventory: “add (quantity) (commodity name) (expiry date)”
 * Viewing inventory: “pantry”
-* Remove item from inventory: “remove <quantity> <commodity name> <expiry date>”
+* Remove item from inventory: “remove (quantity) (commodity name) (expiry date)”
 * Clearing inventory: “remove all”
 
 ## Next Steps ##
