@@ -2,7 +2,8 @@
 <html>
 
 <div class="jumbotron text-center">
-  <h1>Food Watch: Your Cupboard</h1>
+  <img src="https://i.imgur.com/0tL6Y9z.png" alt="By us, For you." width="500">
+  <h1>Food Watch: By Us, For You.</h1>
   <p>Your kitchen, your cupboards, your pantry.</p>
 </div>
 
@@ -14,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
+
 
 <body>
     <div class="container">
@@ -28,7 +30,7 @@
             <tbody>
                 {% for food in foods %}
                     <tr>
-                        <td>{{ food.name }}</td> 
+                        <td>{{ food.name }}</td>
                         <td>{{ food.quantity|string }}</td>
                         <td>{{ food.expiry }}</td>
                         <td>{{ food.daysleft }}</td>
@@ -37,6 +39,7 @@
             </tbody>
         </table>
     </div>
+  </div>
 </body>
 
 
