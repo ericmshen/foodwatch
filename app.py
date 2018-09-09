@@ -288,5 +288,13 @@ def index():
 
     return render_template('index.html', foods = foods)
 
+@app.route('/add')
+def add():
+    return render_template('add.html')
+
+@app.route('/remove')
+def remove():
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(debug=True)
