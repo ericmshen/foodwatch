@@ -79,9 +79,9 @@ def sms():
                     sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire TODAY!\n'
             else:
                 if food['quantity'] == 1 and food['daysleft'] == 1:
-                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires TOMMOROW!\n'
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires TOMORROW!\n'
                 elif food['quantity'] > 1 and food['daysleft'] == 1:
-                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire TOMMOROW!\n'
+                    sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expire TOMORROW!\n'
                 elif food['quantity'] == 1 and food['daysleft'] > 1:
                     sendMessage += u'\u2022' + ' ' + str(food['quantity']) + ' ' + food['name'] + ' expires in ' + str(food['daysleft']) + ' days on ' + food['expiry'] + '\n'
                 else:
