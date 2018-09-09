@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Foods
+{% endblock %}
+
+{% block main %}
+    <h4>Add a food item</h4>
+    <form action="/add" method="POST">
+        Quantity: <input autocomplete="off" autofocus class="form-control" type="text" food.quantity="food.quantity" placeholder="Quantity of Food Item" ><br>
+        Food: <input autocomplete="off" autofocus class="form-control" type="text" food.name="food.name" placeholder="Name of Food" ><br>
+        Expiry: <input autocomplete="off" autofocus class="form-control" type="text" food.expiry="food.expiry" placeholder="Expiry Date" ><br>
+
+    </form>
+    <br>
+
+{% endblock %}
