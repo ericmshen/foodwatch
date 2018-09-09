@@ -283,6 +283,9 @@ def index():
             )
 
     print(message.sid)
+
+    foods = sorted(foods, key = itemgetter('expiry'))
+
     return render_template('index.html', foods = foods)
 
 if __name__ == '__main__':
