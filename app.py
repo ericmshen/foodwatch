@@ -19,16 +19,16 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 
 # Firebase Database
-cred = credentials.Certificate('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json')
+cred = credentials.Certificate('<INSERT CERTIFICATE HERE>')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://foodlord-5dd61.firebaseio.com/'
+    'databaseURL': '<INSERT DATABASE URL HERE>'
     })
 
 root = db.reference()
 
 # Twilio
-account_sid = 'ACa209e1ae289d60729d7321952c4d8974'
-auth_token = '483d41d0e680edbfa018d0f0cfc6c578'
+account_sid = '<INSERT ACCOUNT SID HERE>'
+auth_token = '<INSERT AUTH TOKEN HERE>'
 
 client = Client(account_sid, auth_token)
 
@@ -254,15 +254,6 @@ def index():
             'daysleft': daysleft
             })
 
-    # test message
-    '''
-    message = client.messages.create(
-        to="+16479815279",
-        from_="+12672146320",
-        body="stravinsky = GOAT"
-        )
-    '''
-
     warning = ''
     for food in foods:
         expdate = datetime.strptime(food['expiry'], '%Y-%m-%d').date()
@@ -281,7 +272,7 @@ def index():
 
     if warning != '':
         warningMessage = client.messages.create(
-            to="+16479815279",
+            to="<INSERT TO # HERE>",
             from_="+12672146320",
             body=warning
             )
@@ -331,7 +322,7 @@ def add():
                 new_food = root.child('items').push(entry)
 
             message = client.messages.create(
-                to="+16479815279",
+                to="<INSERT TO # HERE>",
                 from_="+12672146320",
                 body="Added! {0} ({1}) expires {2}".format(entry['name'], entry['quantity'], entry['expiry'])
                 )
@@ -359,7 +350,7 @@ def remove(name, expiry):
                     })
 
     message = client.messages.create(
-        to="+16479815279",
+        to="<INSERT TO # HERE>",
         from_="+12672146320",
         body="Removed! {0} ({1}) expires {2}".format(name, str(quantity), expiry)
         )

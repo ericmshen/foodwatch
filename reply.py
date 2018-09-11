@@ -18,9 +18,9 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 
 # Firebase Database
-cred = credentials.Certificate('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json')
+cred = credentials.Certificate('<INSERT CERTIFICATE HERE>')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://foodlord-5dd61.firebaseio.com/'
+    'databaseURL': '<INSERT URL HERE>'
     })
 
 time_between_insertion = datetime.now() - foodData['expiry']

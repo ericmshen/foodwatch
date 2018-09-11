@@ -9,12 +9,12 @@ import pandas as pd
 import datetime
 
 # Firebase Database
-cred = credentials.Certificate('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json')
+cred = credentials.Certificate('<INSERT CERTIFICATE HERE>')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://foodlord-5dd61.firebaseio.com/'
+    'databaseURL': '<INSERT URL HERE>'
     })
 
-with open('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json') as f:
+with open('<INSERT JSON HERE>') as f:
     data = json.load(f)
 
 data = json.loads(data)
@@ -22,7 +22,7 @@ data = json.loads(data)
 file = csv.writer(open("food_expiry.csv", "wb+"))
 
 def importdict(foodexpiry):
-    df=pd.read_csv('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135' + '.csv'
+    df=pd.read_csv('<INSERT CSV HERE>' + '.csv'
     	information =['name', 'expiry']
     	sep = ';'
     	parse_dates=[0])
@@ -31,9 +31,9 @@ def importdict(foodexpiry):
 if __name__ == '__main__':
     fileDATES = importdict('expiry')
 
-data0=pd.read_csv('foodlord-5dd61-firebase-adminsdk-2ksfc-9d4371b135.json')
+data0=pd.read_csv('<INSERT JSON HERE>')
 
-# %Y - year 
+# %Y - year
 # %m - month (01 - 12)
 # &d - day (01-31)
 data0['expiry']=pd.to_datetime(data0['expiry'], format = "%Y/%m/%d")
@@ -42,4 +42,4 @@ now = datetime.datetime.now()
 
 if "%d" - 7 == now:
 	print("Your " + foodData['name'] + "expires in 1 week!")
-	
+
