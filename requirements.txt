@@ -30,5 +30,5 @@ six==1.11.0
 temps==0.3.0
 twilio==6.16.4
 urllib3==1.23
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 zope.interface==4.5.0
