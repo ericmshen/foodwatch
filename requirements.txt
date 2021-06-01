@@ -29,6 +29,6 @@ rsa==3.4.2
 six==1.11.0
 temps==0.3.0
 twilio==6.16.4
-urllib3==1.23
+urllib3==1.26.5
 Werkzeug==0.14.1
 zope.interface==4.5.0
